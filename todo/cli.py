@@ -50,9 +50,11 @@ def main():
         for task in manager.filter_tasks(predicate):
             print(task)
     elif args.command == "done":
-        manager.mark_complete(args.task_id)
-        manager.save()
-        print("Task marked complete")
+        if manager.mark_complete(args.task_id):
+            manager.save()
+            print("Task marked complete")
+        else:
+            print("Task not found")
     else:
         print("No command specified")
 

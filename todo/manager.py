@@ -27,11 +27,16 @@ class TodoManager(Filterable):
         self.tasks.append(task)
         return task
 
-    def mark_complete(self, task_id: int) -> None:
+    def mark_complete(self, task_id: int) -> bool:
+        """Mark the task with ``task_id`` as completed.
+
+        Returns ``True`` if the task was found and updated, otherwise ``False``.
+        """
         for t in self.tasks:
             if t.id == task_id:
                 t.completed = True
-                break
+                return True
+        return False
 
     def filter_tasks(self, predicate: Callable[[Task], bool]) -> List[Task]:
         return [t for t in self.tasks if predicate(t)]
